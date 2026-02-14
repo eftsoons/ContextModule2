@@ -23,20 +23,11 @@ const config = {
   frontendUrl: process.env.FRONTEND_URL!,
   token: { value: process.env.TOKEN!, verify: true },
   tokenCookie: { value: process.env.TOKEN_COOKIE!, verify: true },
-  tokenMail: { value: process.env.TOKEN_MAIL!, verify: true },
-  fromMail: process.env.FROM_MAIL!,
 };
 
 verifyConfig(config);
 
-export const {
-  frontendUrl,
-  port,
-  token,
-  tokenCookie,
-  databaseUrl,
-  fromMail,
-  tokenMail,
-} = getConfigResult(config);
+export const { frontendUrl, port, token, tokenCookie, databaseUrl } =
+  getConfigResult(config);
 
 export type { configType };

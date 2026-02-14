@@ -1,0 +1,14 @@
+model orderPay {
+    id Int @id @default(autoincrement())
+    userId Int
+    courseId Int
+    status_pay StatusPay
+    user user @relation(fields: [userId], references: [id])
+    course course @relation(fields: [courseId], references: [id])
+}
+
+enum StatusPay {
+    WaitPay
+    Pay
+    ErrorPay
+}

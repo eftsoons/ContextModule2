@@ -51,7 +51,11 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
-
+  course: 'course',
+  coursesUser: 'coursesUser',
+  lesson: 'lesson',
+  orderPay: 'orderPay',
+  user: 'user'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -61,8 +65,111 @@ export type ModelName = (typeof ModelName)[keyof typeof ModelName]
  */
 
 export const TransactionIsolationLevel = runtime.makeStrictEnum({
+  ReadUncommitted: 'ReadUncommitted',
+  ReadCommitted: 'ReadCommitted',
+  RepeatableRead: 'RepeatableRead',
   Serializable: 'Serializable'
 } as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
+export const CourseScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  duration: 'duration',
+  price: 'price',
+  dateStart: 'dateStart',
+  dateEnd: 'dateEnd',
+  img: 'img'
+} as const
+
+export type CourseScalarFieldEnum = (typeof CourseScalarFieldEnum)[keyof typeof CourseScalarFieldEnum]
+
+
+export const CoursesUserScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  courseId: 'courseId'
+} as const
+
+export type CoursesUserScalarFieldEnum = (typeof CoursesUserScalarFieldEnum)[keyof typeof CoursesUserScalarFieldEnum]
+
+
+export const LessonScalarFieldEnum = {
+  id: 'id',
+  coursesId: 'coursesId',
+  title: 'title',
+  text: 'text',
+  supertube_url: 'supertube_url',
+  duration: 'duration'
+} as const
+
+export type LessonScalarFieldEnum = (typeof LessonScalarFieldEnum)[keyof typeof LessonScalarFieldEnum]
+
+
+export const OrderPayScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  courseId: 'courseId',
+  status_pay: 'status_pay'
+} as const
+
+export type OrderPayScalarFieldEnum = (typeof OrderPayScalarFieldEnum)[keyof typeof OrderPayScalarFieldEnum]
+
+
+export const UserScalarFieldEnum = {
+  id: 'id',
+  email: 'email',
+  name: 'name',
+  password: 'password',
+  created_data: 'created_data',
+  adminStatus: 'adminStatus'
+} as const
+
+export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const SortOrder = {
+  asc: 'asc',
+  desc: 'desc'
+} as const
+
+export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const courseOrderByRelevanceFieldEnum = {
+  name: 'name',
+  description: 'description',
+  img: 'img'
+} as const
+
+export type courseOrderByRelevanceFieldEnum = (typeof courseOrderByRelevanceFieldEnum)[keyof typeof courseOrderByRelevanceFieldEnum]
+
+
+export const NullsOrder = {
+  first: 'first',
+  last: 'last'
+} as const
+
+export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const lessonOrderByRelevanceFieldEnum = {
+  title: 'title',
+  text: 'text',
+  supertube_url: 'supertube_url'
+} as const
+
+export type lessonOrderByRelevanceFieldEnum = (typeof lessonOrderByRelevanceFieldEnum)[keyof typeof lessonOrderByRelevanceFieldEnum]
+
+
+export const userOrderByRelevanceFieldEnum = {
+  email: 'email',
+  name: 'name',
+  password: 'password'
+} as const
+
+export type userOrderByRelevanceFieldEnum = (typeof userOrderByRelevanceFieldEnum)[keyof typeof userOrderByRelevanceFieldEnum]
 

@@ -15,7 +15,7 @@ app.use(express.json());
 app.use(verifyJSON);
 app.use(cookieParser(tokenCookie));
 
-app.use(routes);
+app.use("/school-api", routes);
 
 app.use(globalErrorHandler);
 

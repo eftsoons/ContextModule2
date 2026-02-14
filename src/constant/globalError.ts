@@ -1,10 +1,19 @@
 const AllCodeInfo = {
   "US-10000": {
-    codeResponse: 400,
-    message: "Неправильные данные",
-    description: "Неправильный формат данных",
+    codeResponse: 422,
+    message: "Invalid fields",
+    fieldName: [],
   },
-  "US-10100": { codeResponse: 409, message: "Ошибка почты" },
+  "US-10100": {
+    codeResponse: 403,
+    message: "Forbidden for you",
+    fieldName: [],
+  },
+  "US-10200": {
+    codeResponse: 422,
+    message: "Invalid data",
+    fieldName: [],
+  },
 } as const;
 
 type AllCodeInfoType = typeof AllCodeInfo;
@@ -16,16 +25,20 @@ type GetCodeResponse<T extends AllCodeInfoCode> =
 
 type GetMessage<T extends AllCodeInfoCode> = AllCodeInfoType[T]["message"];
 
+type GetFieldName<T extends AllCodeInfoCode> = AllCodeInfoType[T]["fieldName"];
+
 class globalError<
   T extends AllCodeInfoCode,
   C extends number = GetCodeResponse<T>,
   M extends string = GetMessage<T>,
+  Z extends readonly string[] | undefined | Object = GetFieldName<T>,
 > {
   code: AllCodeInfoCode;
   codeResponse: C;
   message: M;
+  fieldName: Z;
 
-  constructor(code: T, arg?: { codeResponse?: C; message?: M }) {
+  constructor(code: T, arg?: { codeResponse?: C; message?: M; fieldName?: Z }) {
     this.code = code;
 
     this.codeResponse = (
@@ -37,16 +50,30 @@ class globalError<
     this.message = (
       arg?.message != undefined ? arg.message : AllCodeInfo[code].message
     ) as M;
+
+    this.fieldName = (
+      arg?.fieldName != undefined
+        ? arg.fieldName
+        : AllCodeInfo[code].fieldName.length > 0
+          ? { field_name: AllCodeInfo[code].fieldName }
+          : undefined
+    ) as Z;
   }
 
   getResponse() {
-    return {
-      isSuccess: false,
-      error: {
-        code: this.code,
-        message: this.message,
-      },
+    const response = {
+      message: this.message,
     };
+
+    if (this.fieldName) {
+      Object.assign(response, {
+        errors: {
+          ...this.fieldName,
+        },
+      });
+    }
+
+    return response;
   }
 }
 

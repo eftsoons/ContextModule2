@@ -9,7 +9,10 @@
 * 🟢 You can import this file directly.
 */
 
+export const StatusPay = {
+  WaitPay: 'WaitPay',
+  Pay: 'Pay',
+  ErrorPay: 'ErrorPay'
+} as const
 
-
-// This file is empty because there are no enums in the schema.
-export {}
+export type StatusPay = (typeof StatusPay)[keyof typeof StatusPay]

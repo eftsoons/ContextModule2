@@ -1,0 +1,9 @@
+model lesson {
+    id Int @id @default(autoincrement())
+    coursesId Int
+    course course @relation(fields: [coursesId], references: [id])
+    title String @db.VarChar(50)
+    text String @db.Text
+    supertube_url String?
+    duration Int
+}

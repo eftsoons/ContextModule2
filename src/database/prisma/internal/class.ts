@@ -19,8 +19,8 @@ const config: runtime.GetPrismaClientConfig = {
   "previewFeatures": [],
   "clientVersion": "7.3.0",
   "engineVersion": "9d6ad21cbbceab97458517b147a6a09ff43aa735",
-  "activeProvider": "sqlite",
-  "inlineSchema": "generator client {\n  provider = \"prisma-client\"\n  output   = \"../../src/database/prisma\"\n}\n\ndatasource db {\n  provider = \"sqlite\"\n}\n",
+  "activeProvider": "mysql",
+  "inlineSchema": "model course {\n  id          Int           @id @default(autoincrement())\n  name        String        @db.VarChar(30)\n  description String        @db.VarChar(100)\n  duration    Int\n  price       Int\n  dateStart   DateTime      @default(now())\n  dateEnd     DateTime\n  img         String\n  lessons     lesson[]\n  coursesUser coursesUser[]\n  orderPay    orderPay[]\n}\n\nmodel coursesUser {\n  id       Int    @id @default(autoincrement())\n  userId   Int\n  courseId Int\n  user     user   @relation(fields: [userId], references: [id])\n  course   course @relation(fields: [courseId], references: [id])\n}\n\nmodel lesson {\n  id            Int     @id @default(autoincrement())\n  coursesId     Int\n  course        course  @relation(fields: [coursesId], references: [id])\n  title         String  @db.VarChar(50)\n  text          String  @db.Text\n  supertube_url String?\n  duration      Int\n}\n\nmodel orderPay {\n  id         Int       @id @default(autoincrement())\n  userId     Int\n  courseId   Int\n  status_pay StatusPay\n  user       user      @relation(fields: [userId], references: [id])\n  course     course    @relation(fields: [courseId], references: [id])\n}\n\nenum StatusPay {\n  WaitPay\n  Pay\n  ErrorPay\n}\n\ngenerator client {\n  provider = \"prisma-client\"\n  output   = \"../../src/database/prisma\"\n}\n\ndatasource db {\n  provider = \"mysql\"\n}\n\nmodel user {\n  id           Int           @id @default(autoincrement())\n  email        String        @unique @db.VarChar(200)\n  name         String?       @db.Text\n  password     String        @db.Text\n  created_data DateTime      @default(now())\n  adminStatus  Boolean       @default(false)\n  coursesUser  coursesUser[]\n  orderPay     orderPay[]\n}\n",
   "runtimeDataModel": {
     "models": {},
     "enums": {},
@@ -28,7 +28,7 @@ const config: runtime.GetPrismaClientConfig = {
   }
 }
 
-config.runtimeDataModel = JSON.parse("{\"models\":{},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"course\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"duration\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"price\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"dateStart\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"dateEnd\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"img\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"lessons\",\"kind\":\"object\",\"type\":\"lesson\",\"relationName\":\"courseTolesson\"},{\"name\":\"coursesUser\",\"kind\":\"object\",\"type\":\"coursesUser\",\"relationName\":\"courseTocoursesUser\"},{\"name\":\"orderPay\",\"kind\":\"object\",\"type\":\"orderPay\",\"relationName\":\"courseToorderPay\"}],\"dbName\":null},\"coursesUser\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"courseId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"user\",\"relationName\":\"coursesUserTouser\"},{\"name\":\"course\",\"kind\":\"object\",\"type\":\"course\",\"relationName\":\"courseTocoursesUser\"}],\"dbName\":null},\"lesson\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"coursesId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"course\",\"kind\":\"object\",\"type\":\"course\",\"relationName\":\"courseTolesson\"},{\"name\":\"title\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"text\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"supertube_url\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"duration\",\"kind\":\"scalar\",\"type\":\"Int\"}],\"dbName\":null},\"orderPay\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"courseId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"status_pay\",\"kind\":\"enum\",\"type\":\"StatusPay\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"user\",\"relationName\":\"orderPayTouser\"},{\"name\":\"course\",\"kind\":\"object\",\"type\":\"course\",\"relationName\":\"courseToorderPay\"}],\"dbName\":null},\"user\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"created_data\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"adminStatus\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"coursesUser\",\"kind\":\"object\",\"type\":\"coursesUser\",\"relationName\":\"coursesUserTouser\"},{\"name\":\"orderPay\",\"kind\":\"object\",\"type\":\"orderPay\",\"relationName\":\"orderPayTouser\"}],\"dbName\":null}},\"enums\":{},\"types\":{}}")
 
 async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Module> {
   const { Buffer } = await import('node:buffer')
@@ -37,10 +37,10 @@ async function decodeBase64AsWasm(wasmBase64: string): Promise<WebAssembly.Modul
 }
 
 config.compilerWasm = {
-  getRuntime: async () => await import("@prisma/client/runtime/query_compiler_fast_bg.sqlite.js"),
+  getRuntime: async () => await import("@prisma/client/runtime/query_compiler_fast_bg.mysql.js"),
 
   getQueryCompilerWasmModule: async () => {
-    const { wasm } = await import("@prisma/client/runtime/query_compiler_fast_bg.sqlite.wasm-base64.js")
+    const { wasm } = await import("@prisma/client/runtime/query_compiler_fast_bg.mysql.wasm-base64.js")
     return await decodeBase64AsWasm(wasm)
   },
 
@@ -60,8 +60,8 @@ export interface PrismaClientConstructor {
    * @example
    * ```
    * const prisma = new PrismaClient()
-   * // Fetch zero or more Users
-   * const users = await prisma.user.findMany()
+   * // Fetch zero or more Courses
+   * const courses = await prisma.course.findMany()
    * ```
    * 
    * Read more in our [docs](https://pris.ly/d/client).
@@ -82,8 +82,8 @@ export interface PrismaClientConstructor {
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more Users
- * const users = await prisma.user.findMany()
+ * // Fetch zero or more Courses
+ * const courses = await prisma.course.findMany()
  * ```
  * 
  * Read more in our [docs](https://pris.ly/d/client).
@@ -176,7 +176,55 @@ export interface PrismaClient<
     extArgs: ExtArgs
   }>>
 
-    
+      /**
+   * `prisma.course`: Exposes CRUD operations for the **course** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Courses
+    * const courses = await prisma.course.findMany()
+    * ```
+    */
+  get course(): Prisma.courseDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.coursesUser`: Exposes CRUD operations for the **coursesUser** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CoursesUsers
+    * const coursesUsers = await prisma.coursesUser.findMany()
+    * ```
+    */
+  get coursesUser(): Prisma.coursesUserDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.lesson`: Exposes CRUD operations for the **lesson** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Lessons
+    * const lessons = await prisma.lesson.findMany()
+    * ```
+    */
+  get lesson(): Prisma.lessonDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.orderPay`: Exposes CRUD operations for the **orderPay** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more OrderPays
+    * const orderPays = await prisma.orderPay.findMany()
+    * ```
+    */
+  get orderPay(): Prisma.orderPayDelegate<ExtArgs, { omit: OmitOpts }>;
+
+  /**
+   * `prisma.user`: Exposes CRUD operations for the **user** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Users
+    * const users = await prisma.user.findMany()
+    * ```
+    */
+  get user(): Prisma.userDelegate<ExtArgs, { omit: OmitOpts }>;
 }
 
 export function getPrismaClientClass(): PrismaClientConstructor {

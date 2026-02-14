@@ -8,4 +8,9 @@
  *
  * 🟢 You can import this file directly.
  */
+export type * from './models/course'
+export type * from './models/coursesUser'
+export type * from './models/lesson'
+export type * from './models/orderPay'
+export type * from './models/user'
 export type * from './commonInputTypes'

@@ -1,11 +1,8 @@
-import { PrismaPg } from "@prisma/adapter-pg";
+import { PrismaMariaDb } from "@prisma/adapter-mariadb";
 import { PrismaClient } from "./prisma/client";
-import { Pool } from "pg";
 import { databaseUrl } from "../config";
 
-const pool = new Pool({ connectionString: databaseUrl });
-
-const adapter = new PrismaPg(pool);
+const adapter = new PrismaMariaDb(databaseUrl);
 
 const prisma = new PrismaClient({ adapter });
 

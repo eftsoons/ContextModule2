@@ -1,0 +1,13 @@
+model course {
+    id Int @id @default(autoincrement())
+    name String @db.VarChar(30)
+    description String @db.VarChar(100)
+    duration Int
+    price Int
+    dateStart DateTime @default(now())
+    dateEnd DateTime
+    img String
+    lessons lesson[]
+    coursesUser coursesUser[]
+    orderPay orderPay[]
+}
