@@ -1,8 +1,6 @@
 import express from "express";
 import auth from "../user/auth";
-import { RequsetAuth } from "../../middleware/auth";
 import globalError from "../../../constant/globalError";
-import getAllCourseId from "../../../database/course/getAllCourseId";
 import getOrderPayId from "../../../database/orderPay/getOrderPayId";
 import deleteOrderPay from "../../../database/orderPay/deleteOrderPay";
 

@@ -15,11 +15,12 @@ const route = express.Router();
  *       200:
  *         description: Вернет документацию API сформированную через OpenApi.
  */
-route.post("/orders", auth, (req, res) => {
+route.get("/orders", auth, (req, res) => {
   const reqMiddleware = req as RequsetAuth;
 
-  const dataCourse = reqMiddleware.userInfo.coursesUser.map((data) => ({
+  const dataCourse = reqMiddleware.userInfo.orderPay.map((data) => ({
     id: data.course.id,
+    payment_status: data.status_pay,
     name: data.course.name,
     description: data.course.description,
     hours: data.course.duration,

@@ -6,7 +6,7 @@ async function getUserEmail(email: string) {
   return await prisma.user.findFirst({
     where: { email: email },
     include: {
-      coursesUser: { include: { course: { include: { lessons: true } } } },
+      orderPay: { include: { course: { include: { lessons: true } } } },
     },
   });
 }
