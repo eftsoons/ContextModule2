@@ -8,6 +8,7 @@ import createWebSocket from "./socket";
 import verifyJSON from "./utils/server/verifyJSON";
 import globalErrorHandler from "./utils/server/globalErrorHandler";
 import globalError from "./constant/globalError";
+import { existsSync } from "fs";
 
 const app = express();
 
@@ -20,7 +21,9 @@ app.get("/:nameHtml", (req, res) => {
   const nameHtml = req.params.nameHtml;
 
   try {
-    res.sendFile(nameHtml, { root: "./media" });
+    if (existsSync(`./media/${nameHtml}`)) {
+      res.sendFile(nameHtml, { root: "./media" });
+    }
   } catch {
     throw new globalError("US-10300");
   }
