@@ -19,23 +19,36 @@ const route = express.Router();
  *         description: Вернет документацию API сформированную через OpenApi.
  */
 route.post("/auth", async (req, res) => {
-  const { email, password }: { email: unknown; password: unknown } = req.body;
+  const reqBody: unknown = req.body;
 
-  if (email && typeof email == "string") {
-    const user = await getUserEmail(email);
+  if (
+    reqBody &&
+    typeof reqBody == "object" &&
+    "email" in reqBody &&
+    "password" in reqBody
+  ) {
+    const { email, password } = reqBody;
 
-    if (user) {
-      if (
-        password &&
-        typeof password == "string" &&
-        user.password == createdHashingSalt(password, token).hash
-      ) {
-        const token = encrypto(
-          JSON.stringify({ email: user.email, password: user.password }),
-        );
+    if (email && typeof email == "string") {
+      const user = await getUserEmail(email);
 
-        if (token) {
-          res.send({ token: token });
+      if (user) {
+        if (
+          password &&
+          typeof password == "string" &&
+          user.password == createdHashingSalt(password, token).hash
+        ) {
+          const token = encrypto(
+            JSON.stringify({ email: user.email, password: user.password }),
+          );
+
+          if (token) {
+            res.send({ token: token });
+          } else {
+            throw new globalError("US-10200", {
+              fieldName: { password: ["Invalid data"] },
+            });
+          }
         } else {
           throw new globalError("US-10200", {
             fieldName: { password: ["Invalid data"] },
@@ -43,7 +56,7 @@ route.post("/auth", async (req, res) => {
         }
       } else {
         throw new globalError("US-10200", {
-          fieldName: { password: ["Invalid data"] },
+          fieldName: { email: ["Invalid data"] },
         });
       }
     } else {
@@ -52,9 +65,7 @@ route.post("/auth", async (req, res) => {
       });
     }
   } else {
-    throw new globalError("US-10200", {
-      fieldName: { email: ["Invalid data"] },
-    });
+    throw new globalError("US-10200");
   }
 });
 

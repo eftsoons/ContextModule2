@@ -20,25 +20,38 @@ const route = express.Router();
  *         description: Вернет документацию API сформированную через OpenApi.
  */
 route.post("/registr", async (req, res) => {
-  const { email, password }: { email: unknown; password: unknown } = req.body;
+  const reqBody: unknown = req.body;
 
-  if (email && typeof email == "string" && validate(email)) {
-    if (password && typeof password == "string" && checkPassword(password)) {
-      const user = await createdUser(
-        email,
-        createdHashingSalt(password, token).hash,
-      );
+  if (
+    reqBody &&
+    typeof reqBody == "object" &&
+    "email" in reqBody &&
+    "password" in reqBody
+  ) {
+    const { email, password } = reqBody;
 
-      if (user) {
-        res.status(201).send({ success: true });
+    if (email && typeof email == "string" && validate(email)) {
+      if (password && typeof password == "string" && checkPassword(password)) {
+        const user = await createdUser(
+          email,
+          createdHashingSalt(password, token).hash,
+        );
+
+        if (user) {
+          res.status(201).send({ success: true });
+        } else {
+          throw new globalError("US-10000");
+        }
       } else {
-        throw new globalError("US-10000");
+        throw new globalError("US-10000", {
+          fieldName: { password: "Invalid" },
+        });
       }
     } else {
-      throw new globalError("US-10000", { fieldName: { password: "Invalid" } });
+      throw new globalError("US-10000", { fieldName: { email: "Invalid" } });
     }
   } else {
-    throw new globalError("US-10000", { fieldName: { email: "Invalid" } });
+    throw new globalError("US-10000");
   }
 });
 
