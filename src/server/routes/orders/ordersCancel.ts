@@ -28,8 +28,8 @@ route.get("/orders/:id", auth, async (req, res) => {
 
       if (orderPay) {
         if (
-          orderPay.status_pay == "ErrorPay" ||
-          orderPay.status_pay == "WaitPay"
+          orderPay.status_pay == "failed" ||
+          orderPay.status_pay == "success"
         ) {
           await deleteOrderPay(orderPay.id);
 

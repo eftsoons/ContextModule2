@@ -18,12 +18,12 @@ async function socketOn(_: Server, ___: Socket, data: unknown) {
       const orderPay = await getOrderPayId(order_id);
 
       if (orderPay) {
-        await updateOrderPayStatusPayId(order_id, "Pay");
+        await updateOrderPayStatusPayId(order_id, "pending");
 
         await createdCoursesUser(orderPay.userId, orderPay.courseId);
       }
     } else {
-      await updateOrderPayStatusPayId(order_id, "ErrorPay");
+      await updateOrderPayStatusPayId(order_id, "failed");
     }
   }
 }

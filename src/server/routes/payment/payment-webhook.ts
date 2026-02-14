@@ -33,12 +33,12 @@ route.post("/payment-webhook", async (req, res) => {
       const orderPay = await getOrderPayId(order_id);
 
       if (orderPay) {
-        await updateOrderPayStatusPayId(order_id, "Pay");
+        await updateOrderPayStatusPayId(order_id, "success");
 
         await createdCoursesUser(orderPay.userId, orderPay.courseId);
       }
     } else {
-      await updateOrderPayStatusPayId(order_id, "ErrorPay");
+      await updateOrderPayStatusPayId(order_id, "failed");
     }
   }
 

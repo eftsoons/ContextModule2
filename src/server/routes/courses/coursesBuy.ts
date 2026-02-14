@@ -38,7 +38,7 @@ route.post("/courses/:course_id/buy", auth, async (req, res) => {
         const newOrderPay = await createdOrderPay(
           reqMiddleware.userInfo.id,
           courseIdNumber,
-          "WaitPay",
+          "pending",
         );
 
         //нужна ссылка на оплату

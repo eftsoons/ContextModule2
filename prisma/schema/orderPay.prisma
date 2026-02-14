@@ -8,7 +8,7 @@ model orderPay {
 }
 
 enum StatusPay {
-    WaitPay
-    Pay
-    ErrorPay
+    pending
+    success
+    failed
 }

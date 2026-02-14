@@ -10,9 +10,9 @@
 */
 
 export const StatusPay = {
-  WaitPay: 'WaitPay',
-  Pay: 'Pay',
-  ErrorPay: 'ErrorPay'
+  pending: 'pending',
+  success: 'success',
+  failed: 'failed'
 } as const
 
 export type StatusPay = (typeof StatusPay)[keyof typeof StatusPay]
