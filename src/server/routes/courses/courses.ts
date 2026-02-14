@@ -1,7 +1,6 @@
 import express from "express";
 import { format } from "date-fns";
 
-import globalError from "../../../constant/globalError";
 import auth, { RequsetAuth } from "../../middleware/auth";
 import paginationCourses from "../../../constant/pagination";
 import getAllCourseIndex from "../../../database/course/getAllCourseIndex";
@@ -27,14 +26,21 @@ route.get("/courses", auth, async (_, res) => {
 
   const paginationCurrent = 1; // в доке не указано откуда брать
 
-  const dataCourse = await getAllCourseIndex(paginationCurrent);
+  const dataCourse = (await getAllCourseIndex(paginationCurrent)).map(
+    (data) => ({
+      id: data.id,
+      name: data.name,
+      description: data.description,
+      hours: data.duration,
+      img: data.img,
+      start_date: format(data.dateStart, "dd.MM.yyyy"),
+      end_date: format(data.dateStart, "dd.MM.yyyy"),
+      price: data.price,
+    }),
+  );
 
   res.send({
-    data: dataCourse.map((data) => ({
-      ...data,
-      dateStart: format(data.dateStart, "dd.MM.yyyy"),
-      dateEnd: format(data.dateStart, "dd.MM.yyyy"),
-    })),
+    data: dataCourse,
     pagination: {
       total: total,
       current: paginationCurrent,

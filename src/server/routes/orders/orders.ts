@@ -1,5 +1,6 @@
 import express from "express";
 import auth, { RequsetAuth } from "../../middleware/auth";
+import { format } from "date-fns";
 
 const route = express.Router();
 
@@ -23,8 +24,8 @@ route.post("/orders", auth, (req, res) => {
     description: data.course.description,
     hours: data.course.duration,
     img: data.course.img,
-    start_date: data.course.dateStart,
-    end_date: data.course.dateEnd,
+    start_date: format(data.course.dateStart, "dd.MM.yyyy"),
+    end_date: format(data.course.dateEnd, "dd.MM.yyyy"),
     price: data.course.price,
   }));
 
