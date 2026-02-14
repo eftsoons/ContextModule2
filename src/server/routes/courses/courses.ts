@@ -1,7 +1,7 @@
 import express from "express";
 import { format } from "date-fns";
 
-import auth, { RequsetAuth } from "../../middleware/auth";
+import auth from "../../middleware/auth";
 import paginationCourses from "../../../constant/pagination";
 import getAllCourseIndex from "../../../database/course/getAllCourseIndex";
 import getAllCourseCount from "../../../database/course/getAllCourseCount";
