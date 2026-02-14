@@ -14,6 +14,11 @@ const AllCodeInfo = {
     message: "Invalid data",
     fieldName: [],
   },
+  "US-10300": {
+    codeResponse: 404,
+    message: "Not Found",
+    fieldName: [],
+  },
 } as const;
 
 type AllCodeInfoType = typeof AllCodeInfo;

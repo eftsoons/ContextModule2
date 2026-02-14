@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ru">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Уроки курса | Админ-панель</title>
+		<link
+			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+			rel="stylesheet" />
+	</head>
+	<body class="bg-light">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+			<div class="container">
+				<span class="navbar-brand">Панель управления</span>
+				<div class="navbar-nav">
+					<a class="nav-link active" href="courses.html">Курсы</a>
+					<a class="nav-link" href="students.html">Студенты</a>
+				</div>
+			</div>
+		</nav>
+
+		<div class="container">
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="courses.html">Курсы</a></li>
+					<li class="breadcrumb-item active">
+						Уроки курса "Основы JavaScript"
+					</li>
+				</ol>
+			</nav>
+
+			<div class="card shadow-sm">
+				<div
+					class="card-header d-flex justify-content-between align-items-center bg-white">
+					<h5 class="mb-0">Список уроков</h5>
+					<a href="lesson_add.html" class="btn btn-primary btn-sm"
+						>Добавить урок</a
+					>
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table class="table table-hover align-middle">
+							<thead class="table-light">
+								<tr>
+									<th>#</th>
+									<th>Заголовок</th>
+									<th>Длительность</th>
+									<th>Видео</th>
+									<th>Действия</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>1</td>
+									<td><strong>Введение в JavaScript</strong></td>
+									<td>2 ч.</td>
+									<td>
+										<a
+											href="https://super-tube.cc/video/v23189"
+											target="_blank"
+											class="small"
+											>Смотреть</a
+										>
+									</td>
+									<td>
+										<button class="btn btn-sm btn-outline-warning">Ред.</button>
+										<button class="btn btn-sm btn-outline-danger">
+											Удалить
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="alert alert-info mt-3 small">
+						Удаление уроков возможно только при отсутствии активных записей
+						студентов на курс.
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- <div class="modal fade" id="lessonModal" tabindex="-1" aria-hidden="true">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<form action="#" method="POST">
+						<div class="modal-header">
+							<h5 class="modal-title">Данные урока</h5>
+							<button
+								type="button"
+								class="btn-close"
+								data-bs-dismiss="modal"
+								aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<div class="mb-3">
+								<label class="form-label">Заголовок (макс. 50 симв.)*</label>
+								<input
+									type="text"
+									class="form-control"
+									maxlength="50"
+									required />
+								<div class="invalid-feedback">Обязательное поле</div>
+							</div>
+							<div class="mb-3">
+								<label class="form-label">Текстовое содержание*</label>
+								<textarea class="form-control" rows="5" required></textarea>
+								<div class="invalid-feedback">Обязательное поле</div>
+							</div>
+							<div class="row">
+								<div class="col-md-6 mb-3">
+									<label class="form-label"
+										>Длительность (целое число, макс. 4 ч.)*</label
+									>
+									<input type="number" class="form-control" max="4" required />
+									<div class="invalid-feedback">
+										Целое число, не более 4 часов
+									</div>
+								</div>
+								<div class="col-md-6 mb-3">
+									<label class="form-label">Видеоссылка SuperTube</label>
+									<input
+										type="url"
+										class="form-control"
+										placeholder="https://super-tube.cc/video/..." />
+									<div class="form-text">Необязательно</div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button
+								type="button"
+								class="btn btn-secondary"
+								data-bs-dismiss="modal">
+								Отмена
+							</button>
+							<button type="submit" class="btn btn-primary">
+								Сохранить урок
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
+	</body>
+</html>

@@ -1,0 +1,306 @@
+{
+	"info": {
+		"_postman_id": "e79462ad-ef35-45ad-9fe4-44fcde476331",
+		"name": "Online School API",
+		"description": "API для платформы онлайн-обучения (Модуль 2)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39125567"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Авторизация",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@edu.com\",\n    \"password\": \"Course2026!\"\n}"
+						},
+						"url": {
+							"raw": "{{api-host}}/auth",
+							"host": [
+								"{{api-host}}"
+							],
+							"path": [
+								"auth"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Регистрация",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {},
+								"requests": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@edu.com\",\n    \"password\": \"Course2026!\"\n}"
+						},
+						"url": {
+							"raw": "{{api-host}}/registr",
+							"host": [
+								"{{api-host}}"
+							],
+							"path": [
+								"registr"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Courses",
+			"item": [
+				{
+					"name": "Получение списка курсов",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api-host}}/courses",
+							"host": [
+								"{{api-host}}"
+							],
+							"path": [
+								"courses"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Получение списка уроков",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api-host}}/courses/1",
+							"host": [
+								"{{api-host}}"
+							],
+							"path": [
+								"courses",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Запись на курс",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{api-host}}/courses/1/buy",
+							"host": [
+								"{{api-host}}"
+							],
+							"path": [
+								"courses",
+								"1",
+								"buy"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Просмотр списка курсов студента",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api-host}}/orders",
+							"host": [
+								"{{api-host}}"
+							],
+							"path": [
+								"orders"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "External Service",
+			"item": [
+				{
+					"name": "Проверка сертификата",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"sertikate_number\": \"ABCDEF123451\"\n}"
+						},
+						"url": {
+							"raw": "{{service_host}}/check-sertificate",
+							"host": [
+								"{{service_host}}"
+							],
+							"path": [
+								"check-sertificate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Webhook для платежной системы",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"order_buy\": 1,\r\n    \"status\": \"success\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api-host}}/payment-webhook",
+							"host": [
+								"{{api-host}}"
+							],
+							"path": [
+								"payment-webhook"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "api-host",
+			"value": "http://your-site.local/school-api",
+			"type": "string"
+		},
+		{
+			"key": "service_host",
+			"value": "http://external-service.local",
+			"type": "string"
+		}
+	]
+}

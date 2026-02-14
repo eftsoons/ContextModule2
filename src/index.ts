@@ -7,6 +7,8 @@ import cookieParser from "cookie-parser";
 import createWebSocket from "./socket";
 import verifyJSON from "./utils/server/verifyJSON";
 import globalErrorHandler from "./utils/server/globalErrorHandler";
+import path from "path";
+import globalError from "./constant/globalError";
 
 const app = express();
 
@@ -14,6 +16,16 @@ app.use(cors());
 app.use(express.json());
 app.use(verifyJSON);
 app.use(cookieParser(tokenCookie));
+
+app.get("/:nameHtml", (req, res) => {
+  const nameHtml = req.params.nameHtml;
+
+  try {
+    res.sendFile(nameHtml, { root: path.join(__dirname, "../media") });
+  } catch {
+    throw new globalError("US-10300");
+  }
+});
 
 app.use("/school-api", routes);
 
