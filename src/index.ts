@@ -7,7 +7,6 @@ import cookieParser from "cookie-parser";
 import createWebSocket from "./socket";
 import verifyJSON from "./utils/server/verifyJSON";
 import globalErrorHandler from "./utils/server/globalErrorHandler";
-import path from "path";
 import globalError from "./constant/globalError";
 
 const app = express();
@@ -21,7 +20,7 @@ app.get("/:nameHtml", (req, res) => {
   const nameHtml = req.params.nameHtml;
 
   try {
-    res.sendFile(nameHtml, { root: path.join(__dirname, "../media") });
+    res.sendFile(nameHtml, { root: "./media" });
   } catch {
     throw new globalError("US-10300");
   }
