@@ -23,8 +23,6 @@ async function createWebSocket(server: TypeServer) {
   const allMessages = await getMessages(allFile);
 
   io.on("connection", (socket) => {
-    console.log(`connect, id: ${socket.id}`);
-
     for (const { name, fun } of allMessages) {
       socket.on(name, (data) => fun(io, socket, data));
     }
